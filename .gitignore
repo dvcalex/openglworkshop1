@@ -1,0 +1,86 @@
+# cmake build directories
+build/
+out/
+cmake-build-*/
+
+# visual studio files
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# vscode
+.vscode/
+
+# build stuff
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# compiled object files
+*.o
+*.obj
+*.elf
+
+# precompiled headers
+*.gch
+*.pch
+
+# compiled dynamic libs
+*.so
+*.dylib
+*.dll
+
+# compiled static libs
+*.a
+*.lib
+
+# executables
+*.exe
+*.out
+*.app
+
+# cmake
+CMakeCache.txt
+CMakeLists.txt.user
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+CMakeUserPresets.json
+
+# IDE specific
+.idea/
+*.iml
+
+# OS specific
+.DS_Store
+Thumbs.
+
+# zed specific
+.zed/
+
+# clang files
+.clangd
+.clang-tidy
+.clang-format
+
+# clangd cache
+.cache/
