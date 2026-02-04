@@ -1,6 +1,9 @@
 #include "cube.hpp"
+#include "shader.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 int main()
@@ -17,7 +20,9 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // create a window and its opengl context
-    GLFWwindow* window = glfwCreateWindow(640, 480, "openglworkshop1", NULL, NULL);
+    constexpr int Width = 640;
+    constexpr int Height = 480;
+    GLFWwindow* window = glfwCreateWindow(Width, Height, "openglworkshop1", NULL, NULL);
     if (!window)
     {
         std::cout << "error with glfwCreateWindow()!" << std::endl;
@@ -40,6 +45,8 @@ int main()
     }
     std::cout << glGetString(GL_VERSION) << std::endl;
 
+    glEnable(GL_DEPTH_TEST); // enable depth testing
+
     // vertex buffer object
     GLuint vbo = 0;
     glGenBuffers(1, &vbo);                                                                 // generate
@@ -58,19 +65,47 @@ int main()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); // texcoord
 
+    // element buffer object
+    GLuint ebo = 0;
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube::Indices), cube::Indices, GL_STATIC_DRAW);
+
+    GLuint shaderProgram = shader::createProgram("res/shaders/cube.vert", "res/shaders/cube.frag");
+
     while (!glfwWindowShouldClose(window))
     {
-        glClear(GL_COLOR_BUFFER_BIT); // clear the screen
+        // clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // --- render here ---
 
-        glfwSwapBuffers(window); // swap front and back buffers
+        // bind shader program and vao
+        glBindVertexArray(vao);
+        glUseProgram(shaderProgram);
 
-        glfwPollEvents(); // poll for and process events
+        // define transformation matrices
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 view = glm::lookAt(glm::vec3(0.f, 1.7f, 1.7f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), Width / (float)Height, 0.1f, 100.0f);
+
+        glm::mat4 mvp = projection * view * model; // combine on cpu
+
+        // send mvp to the shader
+        GLint mvpLoc = glGetUniformLocation(shaderProgram, "u_mvp");
+        glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
+
+        glDrawElements(GL_TRIANGLES, cube::IndexCount, GL_UNSIGNED_INT, nullptr);
+
+        glfwSwapBuffers(window); // swap front and back buffers
+        glfwPollEvents();        // poll for and process events
     }
 
     // cleanup
+    glDeleteProgram(shaderProgram);
     glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &ebo);
     glDeleteBuffers(1, &vbo);
     glfwTerminate();
     return 0;
