@@ -55,6 +55,19 @@ git clone https://github.com/dvcalex/openglworkshop1.git
 cd openglworkshop1
 ```
 
+### Visual Studio (Windows IDE)
+
+1. Open Visual Studio and select **File → Open → Folder...**, then choose the project root
+2. Visual Studio will detect `CMakeLists.txt` and automatically configure the project — wait for the CMake output to finish in the **Output** window
+3. Select `openglworkshop1.exe` from the startup item dropdown in the toolbar and click the green play button to build and run
+
+If IntelliSense shows errors after the first build (especially for GLAD headers which are generated at build time):
+1. Close the folder in Visual Studio
+2. Delete the `.vs` folder in the project root
+3. Re-open the folder and wait for CMake to reconfigure
+
+### Command Line
+
 Build the project
 ```bash
 cmake -B build
