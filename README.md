@@ -57,7 +57,8 @@ sudo pacman -S base-devel cmake git python mesa libx11 libxrandr libxinerama \
 
 ## Branches
 
-- [`main`](https://github.com/dvcalex/openglworkshop1/tree/main) - template code with empty stubs to fill in during the workshop
+- [`main`](https://github.com/dvcalex/openglworkshop1/tree/main) - template code with empty stubs to fill in during the workshop (requires Python 3 with `jinja2` for GLAD2 generation)
+- [`pregenglad2`](https://github.com/dvcalex/openglworkshop1/tree/pregenglad2) - same as `main` but with pre-generated GLAD2 files (no Python or `jinja2` needed)
 - [`completed`](https://github.com/dvcalex/openglworkshop1/tree/completed) - the finished project with all steps implemented
 
 To view the completed code: `git switch completed`
