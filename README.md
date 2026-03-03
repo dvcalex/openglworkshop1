@@ -1,6 +1,9 @@
 # OpenGL Workshop
 This is some code for the KnightHacks OpenGL Workshop. Follow the installation instructions below per operating system.
 
+> [!NOTE]
+> If the `cmake --build build` command doesn't work due to `jinja2`, run `git switch pregenglad2` to switch to [`pregenglad2`](https://github.com/dvcalex/openglworkshop1/tree/pregenglad2) branch that already has pre-generated GLAD2 files.
+
 ## Windows
 
 1. Install [Visual Studio](https://visualstudio.microsoft.com/) with the **"Desktop development with C++"** workload (includes MSVC and CMake), or install CMake and a C++17 compiler separately
@@ -91,10 +94,39 @@ cmake --build build
 
 ## Branches
 
-- [`main`](https://github.com/dvcalex/openglworkshop1/tree/main) - template code with empty stubs to fill in during the workshop
+- [`main`](https://github.com/dvcalex/openglworkshop1/tree/main) - template code with empty stubs to fill in during the workshop (requires Python 3 with `jinja2` for GLAD2 generation)
+- [`pregenglad2`](https://github.com/dvcalex/openglworkshop1/tree/pregenglad2) - same as `main` but with pre-generated GLAD2 files (no Python or `jinja2` needed)
 - [`completed`](https://github.com/dvcalex/openglworkshop1/tree/completed) - the finished project with all steps implemented
 
 To view the completed code: `git switch completed`
+
+## Building
+
+Clone the repo
+
+```bash
+git clone https://github.com/dvcalex/openglworkshop1.git
+cd openglworkshop1
+```
+
+### Command Line
+
+Build the project
+
+```bash
+cmake -B build
+cmake --build build
+```
+
+Run the executable from the **project root** (shaders and textures are loaded with relative paths):
+
+```bash
+# Windows
+build\bin\Debug\openglworkshop1.exe
+
+# Linux/macOS
+./build/bin/openglworkshop1
+```
 
 ## Dependencies
 Don't worry about these unless it looks like something specific is failing.
