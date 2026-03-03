@@ -9,6 +9,8 @@
 
 int main()
 {
+    // ### GLFW Init ###
+
     if (!glfwInit())
     {
         std::cout << "error with glfwInit()!" << std::endl;
@@ -37,6 +39,8 @@ int main()
     // not necessary, but caps the framerate to the monitor refresh rate
     glfwSwapInterval(1);
 
+    // ### GLAD Init ###
+
     // load GL functions once we have a valid context
     if (!gladLoadGL(glfwGetProcAddress))
     {
@@ -46,35 +50,43 @@ int main()
     }
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    glEnable(GL_DEPTH_TEST); // enable depth testing
+    // ### Enable depth testing ###
 
-    // vertex buffer object
-    GLuint vbo = 0;
-    glGenBuffers(1, &vbo);                                                                 // generate
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);                                                    // bind so we can use
+    glEnable(GL_DEPTH_TEST);
+
+    // ### Create VBO (vertex buffer object) ###
+
+    GLuint vbo = 0;                     // OpenGL objects are just ids
+    glGenBuffers(1, &vbo);              // generate
+    glBindBuffer(GL_ARRAY_BUFFER, vbo); // bind so we can use
     glBufferData(GL_ARRAY_BUFFER, sizeof(cube::Vertices), cube::Vertices, GL_STATIC_DRAW); // fill with data
 
-    // vertex array object
+    // ### Create VAO (vertex array object) + vertex attributes ###
+
     GLuint vao = 0;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
     // set up vertex attributes
-    glBindBuffer(GL_ARRAY_BUFFER, vbo); // for safety
+    glBindBuffer(GL_ARRAY_BUFFER, vbo); // just for clarity
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0); // position
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); // texcoord
 
-    // element buffer object
+    // ### Create EBO (element buffer object) ###
+
     GLuint ebo = 0;
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube::Indices), cube::Indices, GL_STATIC_DRAW);
 
+    // ### Load and compile shaders ###
+
     GLuint shaderProgram = shader::createProgram("res/shaders/cube.vert", "res/shaders/cube.frag");
 
-    // load texture
+    // ### Load texture ###
+
     stbi_set_flip_vertically_on_load(1);
     int width, height, bpp;
     unsigned char* tempTexBuf = stbi_load("res/textures/brainrot.png", &width, &height, &bpp, 4);
@@ -83,8 +95,8 @@ int main()
     glGenTextures(1, &textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
@@ -94,18 +106,20 @@ int main()
     if (tempTexBuf)
         stbi_image_free(tempTexBuf);
 
+    // ### Render Loop ###
+
     while (!glfwWindowShouldClose(window))
     {
         // clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // --- render here ---
+        // ### Bind VAO and shader program ###
 
-        // bind shader program and vao
         glBindVertexArray(vao);
         glUseProgram(shaderProgram);
 
-        // bind texture to slot 0
+        // ### Bind texture to slot 0 ###
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textureId);
 
@@ -113,26 +127,29 @@ int main()
         GLint texLoc = glGetUniformLocation(shaderProgram, "u_texture");
         glUniform1i(texLoc, 0); // texture slot 0
 
-        // define transformation matrices
+        // ### Define MVP matrix and send to shader ###
+
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
         glm::mat4 view = glm::lookAt(glm::vec3(0.f, 1.f, 2.3f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), Width / (float)Height, 0.1f, 100.0f);
 
-        glm::mat4 mvp = projection * view * model; // combine on cpu
+        glm::mat4 mvp = projection * view * model; // combine on cpu side
 
         // send mvp to the shader
         GLint mvpLoc = glGetUniformLocation(shaderProgram, "u_mvp");
         glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
 
-        // draw call
+        // ### Draw ###
+
         glDrawElements(GL_TRIANGLES, cube::IndexCount, GL_UNSIGNED_INT, nullptr);
 
         glfwSwapBuffers(window); // swap front and back buffers
         glfwPollEvents();        // poll for and process events
     }
 
-    // cleanup
+    // ### Cleanup ###
+
     glDeleteTextures(1, &textureId);
     glDeleteProgram(shaderProgram);
     glDeleteVertexArrays(1, &vao);
