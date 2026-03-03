@@ -29,7 +29,6 @@ cmake --build build
 build\bin\Debug\openglworkshop1.exe
 ```
 
-
 ## macOS
 
 ```bash
@@ -100,33 +99,6 @@ cmake --build build
 
 To view the completed code: `git switch completed`
 
-## Building
-
-Clone the repo
-
-```bash
-git clone https://github.com/dvcalex/openglworkshop1.git
-cd openglworkshop1
-```
-
-### Command Line
-
-Build the project
-
-```bash
-cmake -B build
-cmake --build build
-```
-
-Run the executable from the **project root** (shaders and textures are loaded with relative paths):
-
-```bash
-# Windows
-build\bin\Debug\openglworkshop1.exe
-
-# Linux/macOS
-./build/bin/openglworkshop1
-```
 
 ## Dependencies
 Don't worry about these unless it looks like something specific is failing.
