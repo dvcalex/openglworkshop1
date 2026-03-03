@@ -4,7 +4,9 @@ This is some code for the Graphics Programming Knights X Knight Hacks OpenGL Wor
 
 ## Windows
 
-1. Install [Visual Studio](https://visualstudio.microsoft.com/) with the **"Desktop development with C++"** workload (includes MSVC and CMake), or install CMake and a C++17 compiler separately
+### Option A: Visual Studio
+
+1. Install [Visual Studio](https://visualstudio.microsoft.com/) with the **"Desktop development with C++"** workload (includes MSVC and CMake)
 2. Install [Git](https://git-scm.com/download/win)
 3. Install [Python 3](https://www.python.org/downloads/). Make sure to check **"Add python.exe to PATH"** during installation
 4. Search for **Developer Command Prompt** or **Developer PowerShell** in the Windows Start Menu to run CMake from the command line
@@ -25,6 +27,34 @@ cmake --build build
 
 # Run project
 build\bin\Debug\openglworkshop1.exe
+```
+
+### Option B: winget + MinGW
+
+```powershell
+# Install dependencies
+winget install Kitware.CMake
+winget install Git.Git
+winget install Python.Python.3.12
+winget install mingw --source winget
+
+# Restart your terminal after installing, then do below
+
+# Clone repo
+git clone https://github.com/dvcalex/openglworkshop1.git
+cd openglworkshop1
+
+# Start virtual environment
+python3 -m venv venv
+venv\Scripts\activate
+pip3 install jinja2
+
+# Build project
+cmake -B build -G "MinGW Makefiles"
+cmake --build build
+
+# Run project
+build\bin\openglworkshop1.exe
 ```
 
 ## macOS
