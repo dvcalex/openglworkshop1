@@ -26,7 +26,6 @@ cmake --build build
 build\bin\Debug\openglworkshop1.exe
 ```
 
-
 ## macOS
 
 ```bash
@@ -96,6 +95,7 @@ cmake --build build
 - [`completed`](https://github.com/dvcalex/openglworkshop1/tree/completed) - the finished project with all steps implemented
 
 To view the completed code: `git switch completed`
+
 
 ## Dependencies
 Don't worry about these unless it looks like something specific is failing.
