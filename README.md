@@ -57,8 +57,8 @@ sudo pacman -S base-devel cmake git python mesa libx11 libxrandr libxinerama \
 
 ## Branches
 
-- `main` - template code with empty stubs to fill in during the workshop
-- `completed` - the finished project with all steps implemented
+- [`main`](https://github.com/dvcalex/openglworkshop1/tree/main) - template code with empty stubs to fill in during the workshop
+- [`completed`](https://github.com/dvcalex/openglworkshop1/tree/completed) - the finished project with all steps implemented
 
 To view the completed code: `git switch completed`
 
