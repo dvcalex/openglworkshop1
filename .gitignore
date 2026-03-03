@@ -17,6 +17,9 @@ cmake-build-*/
 # vscode
 .vscode/
 
+# python virtual environment
+venv/
+
 # build stuff
 [Dd]ebug/
 [Rr]elease/

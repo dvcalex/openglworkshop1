@@ -23,8 +23,19 @@ FetchContent_Declare(
 # GLAD2 OpenGL loader
 FetchContent_Declare(glad GIT_REPOSITORY https://github.com/Dav1dde/glad.git GIT_TAG v2.0.8 SOURCE_SUBDIR cmake)
 
+# Automatically detect and use Python from virtual environment if available
+if(DEFINED ENV{VIRTUAL_ENV})
+    set(Python_EXECUTABLE "$ENV{VIRTUAL_ENV}/bin/python3" CACHE FILEPATH "Path to Python executable")
+    set(Python3_EXECUTABLE "$ENV{VIRTUAL_ENV}/bin/python3" CACHE FILEPATH "Path to Python3 executable")
+    message(STATUS "Using Python from virtual environment: $ENV{VIRTUAL_ENV}")
+endif()
+
+# Find Python (required for glad generator, needs jinja2 package)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+find_package(Python REQUIRED COMPONENTS Interpreter)
+
 FetchContent_MakeAvailable(glfw glad)
-glad_add_library(glad_gl_core_41 STATIC API gl:core=4.1)
+glad_add_library(glad_gl_core_41 REPRODUCIBLE STATIC API gl:core=4.1)
 find_package(OpenGL REQUIRED)
 
 add_executable(${PROJECT_NAME}
