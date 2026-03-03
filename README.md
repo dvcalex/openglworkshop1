@@ -1,5 +1,6 @@
 # OpenGL Workshop
-This is some code for the KnightHacks OpenGL Workshop. Follow the installation instructions below per operating system.
+
+This is some code for the Graphics Programming Knights X Knight Hacks OpenGL Workshop. Follow the installation instructions below per operating system.
 
 ## Windows
 
@@ -81,7 +82,7 @@ pip3 install jinja2
 
 # Build project
 rm -rf build  # If rebuilding
-cmake -B build 
+cmake -B build
 cmake --build build
 
 # Run project
@@ -96,8 +97,8 @@ cmake --build build
 
 To view the completed code: `git switch completed`
 
-
 ## Dependencies
+
 Don't worry about these unless it looks like something specific is failing.
 
 - CMake 3.15 or higher
