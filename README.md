@@ -81,6 +81,9 @@ cmake -B build
 cmake --build build
 ```
 
+> [!NOTE]
+> If the `cmake --build build` command doesn't work due to `jinja2`, run `git switch pregenglad2` to switch to [`pregenglad2`](https://github.com/dvcalex/openglworkshop1/tree/pregenglad2) branch that already has pre-generated GLAD2 files.
+
 Run the executable from the **project root** (shaders and textures are loaded with relative paths):
 
 ```bash
