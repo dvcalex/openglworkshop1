@@ -2,17 +2,21 @@
 
 - CMake 3.15 or higher
 - C++17 compatible compiler
-- Python 3 with `jinja2` (required by GLAD2 to generate the OpenGL loader)
+- Python 3 with `jinja2`
 - Git
 
 After installing Python, install the required package:
+
 ```bash
 pip install jinja2
 ```
 
 ### Windows
 
-Install [Visual Studio](https://visualstudio.microsoft.com/) with the "Desktop development with C++" workload (includes MSVC and CMake), or install CMake and a C++17 compiler separately. Use the **Developer Command Prompt** or **Developer PowerShell** (search for it in the Start menu) to run CMake from the command line. Git can be installed from [git-scm.com](https://git-scm.com/download/win). Install [Python 3](https://www.python.org/downloads/) and make sure to check **"Add python.exe to PATH"** during installation.
+1. Install [Visual Studio](https://visualstudio.microsoft.com/) with the **"Desktop development with C++"** workload (includes MSVC and CMake), or install CMake and a C++17 compiler separately
+2. Install [Git](https://git-scm.com/download/win)
+3. Install [Python 3](https://www.python.org/downloads/). Make sure to check **"Add python.exe to PATH"** during installation
+4. Search for **Developer Command Prompt** or **Developer PowerShell** in the Windows Start Menu to run CMake from the command line
 
 ### macOS
 
@@ -50,31 +54,23 @@ sudo pacman -S base-devel cmake git python mesa libx11 libxrandr libxinerama \
 ## Building
 
 Clone the repo
+
 ```bash
 git clone https://github.com/dvcalex/openglworkshop1.git
 cd openglworkshop1
 ```
 
-### Visual Studio (Windows IDE)
-
-1. Open Visual Studio and select **File → Open → Folder...**, then choose the project root
-2. Visual Studio will detect `CMakeLists.txt` and automatically configure the project — wait for the CMake output to finish in the **Output** window
-3. Select `openglworkshop1.exe` from the startup item dropdown in the toolbar and click the green play button to build and run
-
-If IntelliSense shows errors after the first build (especially for GLAD headers which are generated at build time):
-1. Close the folder in Visual Studio
-2. Delete the `.vs` folder in the project root
-3. Re-open the folder and wait for CMake to reconfigure
-
 ### Command Line
 
 Build the project
+
 ```bash
 cmake -B build
 cmake --build build
 ```
 
 Run the executable
+
 ```bash
 # Windows
 build\bin\Debug\openglworkshop1.exe
@@ -86,6 +82,7 @@ build\bin\Debug\openglworkshop1.exe
 ## Dependencies
 
 All dependencies are automatically fetched with CMake FetchContent
+
 - GLFW 3.4
 - GLAD 2.0.8 (OpenGL 4.1 Core)
 - GLM (header-only, included in `vendor` directory)
