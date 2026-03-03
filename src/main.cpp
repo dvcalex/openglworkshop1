@@ -52,97 +52,29 @@ int main()
 
     // ### Enable depth testing ###
 
-    glEnable(GL_DEPTH_TEST);
-
     // ### Create VBO (vertex buffer object) ###
-
-    GLuint vbo = 0;                     // OpenGL objects are just ids
-    glGenBuffers(1, &vbo);              // generate
-    glBindBuffer(GL_ARRAY_BUFFER, vbo); // bind so we can use
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cube::Vertices), cube::Vertices, GL_STATIC_DRAW); // fill with data
 
     // ### Create VAO (vertex array object) + vertex attributes ###
 
-    GLuint vao = 0;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    // set up vertex attributes
-    glBindBuffer(GL_ARRAY_BUFFER, vbo); // just for clarity
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0); // position
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); // texcoord
-
     // ### Create EBO (element buffer object) ###
-
-    GLuint ebo = 0;
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube::Indices), cube::Indices, GL_STATIC_DRAW);
 
     // ### Load and compile shaders ###
 
-    GLuint shaderProgram = shader::createProgram("res/shaders/cube.vert", "res/shaders/cube.frag");
-
     // ### Load texture ###
-
-    stbi_set_flip_vertically_on_load(1);
-    int width, height, bpp;
-    unsigned char* tempTexBuf = stbi_load("res/textures/brainrot.png", &width, &height, &bpp, 4);
-
-    GLuint textureId = 0;
-    glGenTextures(1, &textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tempTexBuf);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    if (tempTexBuf)
-        stbi_image_free(tempTexBuf);
 
     // ### Render Loop ###
 
     while (!glfwWindowShouldClose(window))
     {
-        // clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // ### Bind VAO and shader program ###
 
-        glBindVertexArray(vao);
-        glUseProgram(shaderProgram);
-
         // ### Bind texture to slot 0 ###
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textureId);
-
-        // send texture slot to the shader
-        GLint texLoc = glGetUniformLocation(shaderProgram, "u_texture");
-        glUniform1i(texLoc, 0); // texture slot 0
 
         // ### Define MVP matrix and send to shader ###
 
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 view = glm::lookAt(glm::vec3(0.f, 1.f, 2.3f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), Width / (float)Height, 0.1f, 100.0f);
-
-        glm::mat4 mvp = projection * view * model; // combine on cpu side
-
-        // send mvp to the shader
-        GLint mvpLoc = glGetUniformLocation(shaderProgram, "u_mvp");
-        glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
-
         // ### Draw ###
-
-        glDrawElements(GL_TRIANGLES, cube::IndexCount, GL_UNSIGNED_INT, nullptr);
 
         glfwSwapBuffers(window); // swap front and back buffers
         glfwPollEvents();        // poll for and process events
@@ -150,11 +82,6 @@ int main()
 
     // ### Cleanup ###
 
-    glDeleteTextures(1, &textureId);
-    glDeleteProgram(shaderProgram);
-    glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(1, &ebo);
-    glDeleteBuffers(1, &vbo);
     glfwTerminate();
     return 0;
 }
