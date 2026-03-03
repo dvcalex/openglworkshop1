@@ -3,11 +3,15 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <filesystem>
 
 namespace shader
 {
 std::string readFile(const std::string& path)
 {
+    std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
+    std::cout << "Reading file at path: \"" << path << "\"" << std::endl;
+
     std::ifstream stream(path);
     std::stringstream ss;
     std::string line;
@@ -15,6 +19,7 @@ std::string readFile(const std::string& path)
     while (getline(stream, line))
     {
         ss << line << '\n';
+        // std::cout << line << '\n';
     }
 
     return ss.str();

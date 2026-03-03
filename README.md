@@ -4,12 +4,16 @@
 - C++17 compatible compiler
 - Python 3 with `jinja2`
 - Git
+- Internet connection to fetch dependencies
 
 After installing Python, install the required package:
 
 ```bash
 pip install jinja2
 ```
+
+> [!NOTE]
+> If `pip` doesn't work, try `pip3 install jinja2` instead.
 
 ### Windows
 
@@ -31,7 +35,7 @@ Xcode Command Line Tools provides Clang and Git. CMake can also be installed fro
 
 ```bash
 sudo apt update
-sudo apt install build-essential cmake git python3 libgl1-mesa-dev libx11-dev \
+sudo apt install build-essential cmake git python3 python3-pip libgl1-mesa-dev libx11-dev \
     libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev \
     libwayland-dev libxkbcommon-dev
 ```
@@ -51,6 +55,13 @@ sudo pacman -S base-devel cmake git python mesa libx11 libxrandr libxinerama \
     libxcursor libxi wayland libxkbcommon
 ```
 
+## Branches
+
+- `main` - template code with empty stubs to fill in during the workshop
+- `completed` - the finished project with all steps implemented
+
+To view the completed code: `git switch completed`
+
 ## Building
 
 Clone the repo
@@ -69,7 +80,7 @@ cmake -B build
 cmake --build build
 ```
 
-Run the executable
+Run the executable from the **project root** (shaders and textures are loaded with relative paths):
 
 ```bash
 # Windows
@@ -81,9 +92,9 @@ build\bin\Debug\openglworkshop1.exe
 
 ## Dependencies
 
-All dependencies are automatically fetched with CMake FetchContent
-
 - GLFW 3.4
 - GLAD 2.0.8 (OpenGL 4.1 Core)
 - GLM (header-only, included in `vendor` directory)
 - stb_image (header-only, included in `vendor` directory)
+
+GLFW and GLAD are fetched from the internet via CMake FetchContent.
