@@ -25,8 +25,9 @@ FetchContent_Declare(glad GIT_REPOSITORY https://github.com/Dav1dde/glad.git GIT
 
 # Automatically detect and use Python from virtual environment if available
 if(DEFINED ENV{VIRTUAL_ENV})
-    set(Python_EXECUTABLE "$ENV{VIRTUAL_ENV}/bin/python3" CACHE FILEPATH "Path to Python executable")
-    set(Python3_EXECUTABLE "$ENV{VIRTUAL_ENV}/bin/python3" CACHE FILEPATH "Path to Python3 executable")
+    find_program(_venv_python NAMES python3 python PATHS "$ENV{VIRTUAL_ENV}/Scripts" "$ENV{VIRTUAL_ENV}/bin" NO_DEFAULT_PATH)
+    set(Python_EXECUTABLE "${_venv_python}" CACHE FILEPATH "Path to Python executable")
+    set(Python3_EXECUTABLE "${_venv_python}" CACHE FILEPATH "Path to Python3 executable")
     message(STATUS "Using Python from virtual environment: $ENV{VIRTUAL_ENV}")
 endif()
 

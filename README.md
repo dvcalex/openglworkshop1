@@ -11,15 +11,25 @@ This is some code for the Graphics Programming Knights X Knight Hacks OpenGL Wor
 3. Install [Python 3](https://www.python.org/downloads/). Make sure to check **"Add python.exe to PATH"** during installation
 4. Search for **Developer Command Prompt** or **Developer PowerShell** in the Windows Start Menu to run CMake from the command line
 
-```bash
+OR just install Build Tools from the command line:
+
+```powershell
+winget install Microsoft.VisualStudio.2022.BuildTools --override "--add Microsoft.VisualStudio.Workload.VCTools --passive"
+winget install Git.Git
+winget install Python.Python.3.12
+```
+
+Then open **Developer PowerShell for VS** from the Start Menu.
+
+```powershell
 # Clone repo
 git clone https://github.com/dvcalex/openglworkshop1.git
 cd openglworkshop1
 
 # Start virtual environment
 python3 -m venv venv
-source venv/bin/activate
-pip3 install jinja2
+.\venv\Scripts\activate
+python -m pip install jinja2
 
 # Build project
 cmake -B build
@@ -36,18 +46,26 @@ build\bin\Debug\openglworkshop1.exe
 winget install Kitware.CMake
 winget install Git.Git
 winget install Python.Python.3.12
-winget install mingw --source winget
+winget install MSYS2.MSYS2
+```
 
-# Restart your terminal after installing, then do below
+Open **MSYS2 UCRT64** from the Start Menu and install the compiler:
 
+```bash
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make
+```
+
+Add `C:\msys64\ucrt64\bin` to your [system PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/), then restart your terminal.
+
+```powershell
 # Clone repo
 git clone https://github.com/dvcalex/openglworkshop1.git
 cd openglworkshop1
 
 # Start virtual environment
 python3 -m venv venv
-venv\Scripts\activate
-pip3 install jinja2
+.\venv\Scripts\activate
+python -m pip install jinja2
 
 # Build project
 cmake -B build -G "MinGW Makefiles"
@@ -71,7 +89,7 @@ cd openglworkshop1
 # Start virtual environment
 python3 -m venv venv
 source venv/bin/activate
-pip3 install jinja2
+python -m pip install jinja2
 
 # Build project
 rm -rf build  # If rebuilding
@@ -89,7 +107,7 @@ Xcode Command Line Tools provides Clang and Git. CMake can also be installed fro
 ```bash
 # Debian install dependencies
 sudo apt update
-sudo apt install build-essential cmake git python3 python3-pip libgl1-mesa-dev libx11-dev \
+sudo apt install build-essential cmake git python3 python3-venv libgl1-mesa-dev libx11-dev \
     libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev \
     libwayland-dev libxkbcommon-dev
 # RHEL install dependencies
