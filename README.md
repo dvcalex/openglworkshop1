@@ -6,14 +6,15 @@ The completed workshop code is available in `src/completed.cpp` for reference.
 
 ## Windows
 
-### Option A: Visual Studio
+### Visual Studio Build Tools (Recommended)
 
 ```powershell
+# Install dependencies
 winget install Microsoft.VisualStudio.2022.BuildTools --override "--add Microsoft.VisualStudio.Workload.VCTools --passive"
 winget install Git.Git
 ```
 
-Then open **Developer PowerShell for VS** from the Start Menu.
+Open **Developer PowerShell for VS** from the Windows Start Menu and run the below commands:
 
 ```powershell
 # Clone repo
@@ -28,7 +29,7 @@ cmake --build build
 build\bin\Debug\openglworkshop1.exe
 ```
 
-### Option B: winget + MinGW
+### winget + MinGW (Alternative)
 
 ```powershell
 # Install dependencies
@@ -37,7 +38,7 @@ winget install Git.Git
 winget install MSYS2.MSYS2
 ```
 
-Open **MSYS2 UCRT64** from the Start Menu and install the compiler:
+Open **MSYS2 UCRT64** from the Windows Start Menu and run the below commands:
 
 ```bash
 pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make
@@ -116,8 +117,8 @@ Don't worry about these unless it looks like something specific is failing.
 - CMake 3.15 or higher
 - C++17 compatible compiler
 - Git
-- Internet connection to fetch dependencies
 - GLFW 3.4
 - GLAD 2.0.8 (OpenGL 4.1 Core, pre-generated in `vendor/glad/`)
 - GLM (header-only, included in `vendor` directory)
 - stb_image (header-only, included in `vendor` directory)
+- Internet connection to fetch some dependencies
