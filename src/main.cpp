@@ -60,7 +60,21 @@ int main()
 
     // ### Load and compile shaders ###
 
+    GLuint shaderProgram = shader::createProgram("res/shaders/cube.vert", "res/shaders/cube.frag");
+
     // ### Load texture ###
+
+    stbi_set_flip_vertically_on_load(1);
+    int width, height, bpp;
+    unsigned char* tempTexBuf = stbi_load("res/textures/brainrot.png", &width, &height, &bpp, 4);
+
+    // generate and bind texture
+
+    // set texture parameters
+
+    // free cpu-side image buffer
+    if (tempTexBuf)
+        stbi_image_free(tempTexBuf);
 
     // ### Render Loop ###
 
@@ -81,6 +95,7 @@ int main()
     }
 
     // ### Cleanup ###
+    glDeleteProgram(shaderProgram);
 
     glfwTerminate();
     return 0;
