@@ -4,7 +4,11 @@ This is some code for the Graphics Programming Knights X Knight Hacks OpenGL Wor
 
 ## Windows
 
-### Option A: Visual Studio
+> **Pick ONE of the options below. Most people should use Visual Studio Build Tools.**
+
+### Visual Studio Build Tools (Recommended)
+
+Open **PowerShell** and run the below commands to install dependencies:
 
 ```powershell
 winget install Microsoft.VisualStudio.2022.BuildTools --override "--add Microsoft.VisualStudio.Workload.VCTools --passive"
@@ -12,7 +16,7 @@ winget install Git.Git
 winget install Python.Python.3.12
 ```
 
-Then open **Developer PowerShell for VS** from the Start Menu.
+Then open **Developer PowerShell for VS** from the Windows Start Menu and run the below commands:
 
 ```powershell
 # Clone repo
@@ -32,17 +36,19 @@ cmake --build build
 build\bin\Debug\openglworkshop1.exe
 ```
 
-### Option B: winget + MinGW
+<details>
+<summary><b>MinGW (Alternative to Visual Studio)</b></summary>
+
+Open **PowerShell** and run the below commands to install dependencies:
 
 ```powershell
-# Install dependencies
 winget install Kitware.CMake
 winget install Git.Git
 winget install Python.Python.3.12
 winget install MSYS2.MSYS2
 ```
 
-Open **MSYS2 UCRT64** from the Start Menu and install the compiler:
+Open **MSYS2 UCRT64** from the Windows Start Menu and run the below commands:
 
 ```bash
 pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make
@@ -67,6 +73,8 @@ cmake --build build
 # Run project
 build\bin\openglworkshop1.exe
 ```
+
+</details>
 
 ## macOS
 
@@ -146,8 +154,8 @@ Don't worry about these unless it looks like something specific is failing.
 - C++17 compatible compiler
 - Python 3 with `jinja2`
 - Git
-- Internet connection to fetch dependencies
 - GLFW 3.4
 - GLAD 2.0.8 (OpenGL 4.1 Core)
 - GLM (header-only, included in `vendor` directory)
 - stb_image (header-only, included in `vendor` directory)
+- Internet connection to fetch some dependencies
