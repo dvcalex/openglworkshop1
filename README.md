@@ -6,6 +6,8 @@ The completed workshop code is available in `src/completed.cpp` for reference.
 
 ## Windows
 
+> **Pick ONE of the options below. Most people should use Visual Studio Build Tools.**
+
 ### Visual Studio Build Tools (Recommended)
 
 ```powershell
@@ -29,7 +31,8 @@ cmake --build build
 build\bin\Debug\openglworkshop1.exe
 ```
 
-### winget + MinGW (Alternative)
+<details>
+<summary><h3>winget + MinGW (Alternative — only if you can't use Visual Studio)</h3></summary>
 
 ```powershell
 # Install dependencies
@@ -58,6 +61,8 @@ cmake --build build
 # Run project
 build\bin\openglworkshop1.exe
 ```
+
+</details>
 
 ## macOS
 
