@@ -10,13 +10,14 @@ The completed workshop code is available in `src/completed.cpp` for reference.
 
 ### Visual Studio Build Tools (Recommended)
 
+Open **PowerShell** and run the below commands to install dependencies:
+
 ```powershell
-# Install dependencies
 winget install Microsoft.VisualStudio.2022.BuildTools --override "--add Microsoft.VisualStudio.Workload.VCTools --passive"
 winget install Git.Git
 ```
 
-Open **Developer PowerShell for VS** from the Windows Start Menu and run the below commands:
+Then open **Developer PowerShell for VS** from the Windows Start Menu and run the below commands:
 
 ```powershell
 # Clone repo
@@ -32,10 +33,11 @@ build\bin\Debug\openglworkshop1.exe
 ```
 
 <details>
-<summary><h3>winget + MinGW (Alternative — only if you can't use Visual Studio)</h3></summary>
+<summary><b>MinGW (Alternative to Visual Studio)</b></summary>
+
+Open **PowerShell** and run the below commands to install dependencies:
 
 ```powershell
-# Install dependencies
 winget install Kitware.CMake
 winget install Git.Git
 winget install MSYS2.MSYS2
