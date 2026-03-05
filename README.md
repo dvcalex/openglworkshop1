@@ -6,13 +6,6 @@ This is some code for the Graphics Programming Knights X Knight Hacks OpenGL Wor
 
 ### Option A: Visual Studio
 
-1. Install [Visual Studio](https://visualstudio.microsoft.com/) with the **"Desktop development with C++"** workload (includes MSVC and CMake)
-2. Install [Git](https://git-scm.com/download/win)
-3. Install [Python 3](https://www.python.org/downloads/). Make sure to check **"Add python.exe to PATH"** during installation
-4. Search for **Developer Command Prompt** or **Developer PowerShell** in the Windows Start Menu to run CMake from the command line
-
-OR just install Build Tools from the command line:
-
 ```powershell
 winget install Microsoft.VisualStudio.2022.BuildTools --override "--add Microsoft.VisualStudio.Workload.VCTools --passive"
 winget install Git.Git
